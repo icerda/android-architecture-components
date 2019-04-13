@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.ccit.roomwordsample"
-        minSdkVersion 26
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -39,4 +39,7 @@ dependencies {
     // Lombok
     compileOnly "org.projectlombok:lombok:$rootProject.lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$rootProject.lombokVersion"
+
+    // Android-Debug-Database
+    implementation 'com.amitshekhar.android:debug-db:1.0.6'
 }
