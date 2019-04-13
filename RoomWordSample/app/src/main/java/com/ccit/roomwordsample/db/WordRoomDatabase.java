@@ -7,6 +7,7 @@ import com.ccit.roomwordsample.db.dao.WordDao;
 import com.ccit.roomwordsample.db.entity.Word;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -14,10 +15,29 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {
         Word.class
-}, version = 1)
+}, version = 2)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
+    public static final String DATABASE_NAME = "word_database";
+
     public abstract WordDao wordDao();
+
+    private static volatile WordRoomDatabase INSTANCE;
+
+    public static WordRoomDatabase getDataBase(final Context context) {
+        if (INSTANCE == null) {
+            synchronized (WordRoomDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            WordRoomDatabase.class, DATABASE_NAME)
+                            .addCallback(sRoomDatabaseCallback)
+                            .build();
+                }
+            }
+
+        }
+        return INSTANCE;
+    }
 
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
 
@@ -28,23 +48,6 @@ public abstract class WordRoomDatabase extends RoomDatabase {
 
         }
     };
-
-    private static volatile WordRoomDatabase INSTANCE;
-
-    public static WordRoomDatabase getDataBase(final Context context) {
-        if (INSTANCE == null) {
-            synchronized (WordRoomDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            WordRoomDatabase.class, "word_database")
-                            .addCallback(sRoomDatabaseCallback)
-                            .build();
-                }
-            }
-
-        }
-        return INSTANCE;
-    }
 
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
@@ -57,11 +60,11 @@ public abstract class WordRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(final Void... params) {
-            mDao.deleteAll();
-            Word word = new Word("Hello");
-            mDao.insert(word);
-            word = new Word("World");
-            mDao.insert(word);
+            //mDao.deleteAll();
+//            Word word = new Word("Hello3");
+//            mDao.insert(word);
+//            word = new Word("World3");
+//            mDao.insert(word);
             return null;
         }
     }
