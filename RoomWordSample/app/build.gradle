@@ -43,8 +43,8 @@ dependencies {
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
 
     // Lombok
-    compileOnly "org.projectlombok:lombok:$rootProject.lombokVersion"
-    annotationProcessor "org.projectlombok:lombok:$rootProject.lombokVersion"
+//    compileOnly "org.projectlombok:lombok:$rootProject.lombokVersion"
+//    annotationProcessor "org.projectlombok:lombok:$rootProject.lombokVersion"
 
     // Android-Debug-Database
     implementation 'com.amitshekhar.android:debug-db:1.0.6'

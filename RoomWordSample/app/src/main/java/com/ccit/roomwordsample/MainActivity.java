@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final WordListAdapter adapter = new WordListAdapter(this);
-        recyclerView.setAdapter(adapter);
+        //final WordListAdapter adapter = new WordListAdapter(this);
+        //recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mWordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChanged(@Nullable final List<Word> words) {
-                adapter.setWords(words);
+                //adapter.setWords(words);
             }
         });
 

@@ -43,6 +43,9 @@ dependencies {
     implementation deps.rx_android
     implementation deps.rxjava2
 
+    // Stetho
+    implementation "com.facebook.stetho:stetho:1.5.1"
+
     // Dependencies for local unit tests
     testImplementation deps.junit
     testImplementation deps.hamcrest
