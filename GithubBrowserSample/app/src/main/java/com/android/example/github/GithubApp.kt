@@ -19,6 +19,7 @@ package com.android.example.github
 import android.app.Activity
 import android.app.Application
 import com.android.example.github.di.AppInjector
+import com.facebook.stetho.Stetho
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import timber.log.Timber
@@ -31,6 +32,8 @@ class GithubApp : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this)
+
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }

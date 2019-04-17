@@ -23,32 +23,47 @@ import com.android.example.github.db.GithubDb
 import com.android.example.github.db.RepoDao
 import com.android.example.github.db.UserDao
 import com.android.example.github.util.LiveDataCallAdapterFactory
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
+
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    }
+
     @Singleton
     @Provides
     fun provideGithubService(): GithubService {
+
+        val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(provideHttpLoggingInterceptor())// Logging Interceptor
+                .addNetworkInterceptor(StethoInterceptor()) // Stetho Interceptor
+                .build()
+
         return Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(LiveDataCallAdapterFactory())
-            .build()
-            .create(GithubService::class.java)
+                .client(okHttpClient)
+                .baseUrl("https://api.github.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(LiveDataCallAdapterFactory())
+                .build()
+                .create(GithubService::class.java)
     }
 
     @Singleton
     @Provides
     fun provideDb(app: Application): GithubDb {
         return Room
-            .databaseBuilder(app, GithubDb::class.java, "github.db")
-            .fallbackToDestructiveMigration()
-            .build()
+                .databaseBuilder(app, GithubDb::class.java, "github.db")
+                .fallbackToDestructiveMigration()
+                .build()
     }
 
     @Singleton
