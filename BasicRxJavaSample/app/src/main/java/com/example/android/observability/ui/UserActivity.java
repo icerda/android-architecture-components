@@ -25,6 +25,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.android.observability.Injection;
 import com.example.android.persistence.R;
+import com.facebook.stetho.Stetho;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -52,6 +54,7 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_user);
 
         mUserName = findViewById(R.id.user_name);
